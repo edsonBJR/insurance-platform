@@ -1,7 +1,9 @@
 package com.insurance.clients.infrastructure.web
 
 import com.insurance.clients.application.ClientService
+import com.insurance.clients.application.dto.ClientStatusUpdateRequest
 import com.insurance.clients.domain.Client
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -17,6 +19,17 @@ class ClientController(private val clientService: ClientService) {
     @GetMapping
     fun getAllClients(): List<Client> = clientService.getAllClients()
 
-    @DeleteMapping("/{id}")
-    fun deleteClient(@PathVariable id: UUID) = clientService.deleteClient(id)
+    @PatchMapping("/{id}/status")
+    fun updateClientStatus(
+        @PathVariable id: UUID,
+        @RequestBody request: ClientStatusUpdateRequest
+    ): ResponseEntity<Client> {
+        val updatedClient = clientService.updateClientStatus(id, request.status)
+        return if (updatedClient != null) {
+            ResponseEntity.ok(updatedClient)
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
 }

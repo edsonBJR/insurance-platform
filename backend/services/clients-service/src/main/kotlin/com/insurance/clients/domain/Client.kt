@@ -8,7 +8,11 @@ import java.util.*
 data class Client(
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
+
     val name: String,
     val email: String,
-    val phone: String
+    val phone: String,
+
+    @Enumerated(EnumType.STRING)
+    var status: ClientStatus = ClientStatus.ATIVO
 )
