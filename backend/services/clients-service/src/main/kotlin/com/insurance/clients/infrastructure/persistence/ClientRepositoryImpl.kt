@@ -10,5 +10,4 @@ class ClientRepositoryImpl(private val jpaClientRepository: JpaClientRepository)
     override fun save(client: Client): Client = jpaClientRepository.save(client)
     override fun findById(id: UUID): Client? = jpaClientRepository.findById(id).orElse(null)
     override fun findAll(): List<Client> = jpaClientRepository.findAll()
-    override fun deleteById(id: UUID) = jpaClientRepository.deleteById(id)
 }
