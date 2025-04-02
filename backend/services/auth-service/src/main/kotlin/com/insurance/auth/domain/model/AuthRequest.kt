@@ -1,4 +1,4 @@
-package com.insurance.auth.application.dto
+package com.insurance.auth.domain.model
 
 data class AuthRequest(
     val username: String,

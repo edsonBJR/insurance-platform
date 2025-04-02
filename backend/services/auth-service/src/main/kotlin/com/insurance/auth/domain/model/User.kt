@@ -1,4 +1,4 @@
-package com.insurance.auth.domain
+package com.insurance.auth.domain.model
 
 import jakarta.persistence.*
 import java.util.*
@@ -6,15 +6,17 @@ import java.util.*
 @Entity
 @Table(name = "users")
 data class User(
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     val id: UUID? = null,
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     val username: String,
 
     @Column(nullable = false)
     val password: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val role: String
+    val role: Role
 )
