@@ -10,7 +10,8 @@ export default function LoginPage() {
   const handleLogin = ({ username, password }: { username: string; password: string }) => {
     console.log("Tentando login com:", username, password);
     if (username === mockUser.username && password === mockUser.password) {
-      navigate("/clientes");
+      login(username, password);
+      navigate("/dashboard");
     } else {
       alert("Credenciais inválidas");
     }

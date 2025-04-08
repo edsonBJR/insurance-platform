@@ -10,17 +10,13 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthService(
-    private val authenticationManager: AuthenticationManager,
-    private val jwtUtil: JwtUtil,
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val jwtUtil: JwtUtil,
+    private val authenticationManager: AuthenticationManager
 ) {
-    fun authenticate(authRequest: AuthRequest): AuthResponse {
-        authenticationManager.authenticate(
-            UsernamePasswordAuthenticationToken(authRequest.username, authRequest.password)
-        )
-
-        val token = jwtUtil.generateToken(authRequest.username)
-        return AuthResponse(token)
+    fun authenticate(username: String, password: String): String {
+        authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
+        val user = userRepository.findByUsername(username) ?: throw IllegalArgumentException("Usuário não encontrado")
+        return jwtUtil.generateToken(user.username, user.role.name)
     }
 }

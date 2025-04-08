@@ -27,13 +27,6 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
       />
       <div className="flex justify-between items-center">
         <Checkbox label="Manter conectado" />
-        <button
-          type="button"
-          className="text-sm text-blue-600 hover:underline"
-          onClick={() => setShowPassword((prev) => !prev)}
-        >
-          {showPassword ? "Ocultar Senha" : "Mostrar Senha"}
-        </button>
       </div>
       <Button type="submit">Entrar</Button>
       <div className="text-center text-sm">

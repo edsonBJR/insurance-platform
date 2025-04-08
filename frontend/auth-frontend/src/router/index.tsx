@@ -1,3 +1,4 @@
+import DashboardPage from "../components/pages/Dashboard";
 import ClientesPage from "../components/pages/Clientes";
 import LoginPage from "../components/pages/Login";
 import PagamentosPage from "../components/pages/Pagamentos";
@@ -11,6 +12,7 @@ export default function Router() {
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/clientes" element={<ClientesPage />} />
         <Route path="/sinistros" element={<SinistrosPage />} />
         <Route path="/pagamentos" element={<PagamentosPage />} />

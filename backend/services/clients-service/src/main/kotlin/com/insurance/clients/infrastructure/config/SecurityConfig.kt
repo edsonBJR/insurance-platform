@@ -2,20 +2,23 @@ package com.insurance.clients.infrastructure.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
-@Profile("dev") // Esta configuração só será aplicada quando o perfil 'dev' estiver ativo
-class SecurityConfig {
+class SecurityConfig(private val jwtAuthFilter: JwtAuthFilter) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .authorizeHttpRequests { auth -> auth.anyRequest().permitAll() }
-            .csrf { csrf -> csrf.disable() } // Desativa proteção CSRF para facilitar os testes
-            .headers { headers -> headers.frameOptions().disable() } // Permite acessar o H2 Console
+            .csrf().disable()
+            .authorizeHttpRequests {
+                it.requestMatchers( "/actuator/**").permitAll() // Permitir rotas públicas
+                    .anyRequest().authenticated() // Exigir autenticação para qualquer outra rota
+            }
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java) // Corrige o erro
+
         return http.build()
     }
 }

@@ -1,4 +1,4 @@
 export const mockUser = {
     username: "edson",
-    password: "senha123",
+    password: "1q2w3e4r!",
   };
