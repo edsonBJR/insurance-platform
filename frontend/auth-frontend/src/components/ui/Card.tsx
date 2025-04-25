@@ -1,29 +1,15 @@
-import { ReactNode } from "react";
-import classNames from "classnames";
 
-type CardProps = {
-  children: ReactNode;
-  className?: string;
-};
+import { cn } from "../../lib/Utils";
+import { HTMLAttributes } from "react";
 
-export function Card({ children, className }: CardProps) {
-  return (
-    <div
-      className={classNames(
-        "rounded-2xl border border-gray-200 bg-white shadow-sm dark:bg-gray-300 dark:border-gray-700",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  // pode adicionar props específicas se quiser
 }
 
-type CardContentProps = {
-  children: ReactNode;
-  className?: string;
-};
+export function Card({ className, ...props }: CardProps) {
+  return <div className={cn("rounded-lg bg-card text-card-foreground shadow", className)} {...props} />;
+}
 
-export function CardContent({ children, className }: CardContentProps) {
-  return <div className={classNames("p-4", className)}>{children}</div>;
-}   
+export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn("p-4", className)} {...props} />;
+}

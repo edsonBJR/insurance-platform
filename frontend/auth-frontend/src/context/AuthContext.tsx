@@ -1,32 +1,28 @@
-import { mockUser } from "../mocks/mockUser";
-import React, { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 
+type User = {
+  username: string;
+  password: string;
+  role: string;
+};
 
 interface AuthContextType {
-  user: { username: string } | null;
-  login: (username: string, password: string) => boolean;
+  user: User | null;
+  login: (user: User) => void;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<{ username: string } | null>(null);
-  const navigate = useNavigate();
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
 
-  const login = (username: string, password: string): boolean => {
-    if (username === mockUser.username && password === mockUser.password) {
-      setUser({ username });
-      navigate("/clientes");
-      return true;
-    }
-    return false;
+  const login = (user: User) => {
+    setUser(user);
   };
 
   const logout = () => {
     setUser(null);
-    navigate("/");
   };
 
   return (
@@ -34,10 +30,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);

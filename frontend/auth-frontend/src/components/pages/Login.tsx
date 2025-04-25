@@ -9,8 +9,13 @@ export default function LoginPage() {
 
   const handleLogin = ({ username, password }: { username: string; password: string }) => {
     console.log("Tentando login com:", username, password);
-    if (username === mockUser.username && password === mockUser.password) {
-      login(username, password);
+  
+    const userFound = mockUser.find(
+      (user) => user.username === username && user.password === password
+    );
+  
+    if (userFound) {
+      login(userFound)
       navigate("/dashboard");
     } else {
       alert("Credenciais inválidas");
