@@ -4,7 +4,7 @@ import Router from './router'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/insurance-platform/">
       <AuthProvider>
         <Router />
       </AuthProvider>

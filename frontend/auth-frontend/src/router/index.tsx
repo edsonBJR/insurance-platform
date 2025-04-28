@@ -10,6 +10,7 @@ import Comissoes from "../components/pages/Comissoes";
 import Tarefas from "../components/pages/Tarefas";
 import Cotacoes from "../components/pages/Cotacoes";
 import Perfil from "../components/pages/Tarefas";
+import DetalhesApolice from "../components/pages/DetalhesApolice";
 
 
 export default function Router() {
@@ -26,6 +27,7 @@ export default function Router() {
         <Route path="/cotacoes" element={<Cotacoes />} />
         <Route path="/tarefas" element={<Tarefas />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/apolices/:id" element={<DetalhesApolice />} />
       </Route>
     </Routes>
   );
